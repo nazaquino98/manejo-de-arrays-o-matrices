@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registro de Personas</title>
+</head>
+<body>
+
+    <h1>Programa de Registro de Personas</h1>
+
+    <button onclick="ingresarDatos()">Registrar Personas</button>
+
+    <div id="resultados">
+        <h2>Listado de Personas</h2>
+        <div id="personasIngresadas"></div>
+        <h2>Listado de Personas Ordenado por Nota</h2>
+        <div id="personasOrdenadas"></div>
+    </div>
+
+    <script>
+        function ingresarDatos() {
+            let personas = [];
+            let cantidadPersonas = prompt("¿Cuántas personas deseas registrar?");
+            
+            for (let i = 0; i < cantidadPersonas; i++) {
+                let nombre = prompt(`Ingresa el nombre de la persona ${i + 1}:`);
+                let edad = prompt(`Ingresa la edad de ${nombre}:`);
+
+                // Validar y pedir la nota hasta que se ingrese un número válido
+                let nota;
+                do {
+                    nota = prompt(`Ingresa la nota de ${nombre}:`);
+                    // Convertir la nota a número y verificar si es un valor válido
+                    nota = parseFloat(nota);
+                    if (isNaN(nota)) {
+                        alert("Por favor ingresa una nota válida (un número).");
+                    }
+                } while (isNaN(nota));
+
+                // Almacena los datos en un arreglo [nombre, edad, nota]
+                personas.push([nombre, edad, nota]);
+            }
+
+            // Mostrar los datos tal como fueron ingresados
+            let personasIngresadasHTML = "<ul>";
+            personas.forEach(persona => {
+                personasIngresadasHTML += `<li>Nombre: ${persona[0]}, Edad: ${persona[1]}, Nota: ${persona[2]}</li>`;
+            });
+            personasIngresadasHTML += "</ul>";
+
+            // Mostrar la lista de personas ingresadas
+            document.getElementById("personasIngresadas").innerHTML = personasIngresadasHTML;
+
+            // Ordenar la lista por nota, de mayor a menor
+            personas.sort((a, b) => b[2] - a[2]);
+
+            // Mostrar los datos ordenados por nota
+            let personasOrdenadasHTML = "<ul>";
+            personas.forEach(persona => {
+                personasOrdenadasHTML += `<li>Nombre: ${persona[0]}, Edad: ${persona[1]}, Nota: ${persona[2]}</li>`;
+            });
+            personasOrdenadasHTML += "</ul>";
+
+            // Mostrar la lista ordenada por nota
+            document.getElementById("personasOrdenadas").innerHTML = personasOrdenadasHTML;
+        }
+    </script>
+
+</body>
+</html>
